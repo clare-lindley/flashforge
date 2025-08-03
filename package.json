@@ -1,0 +1,23 @@
+{
+  "name": "flashforge",
+  "version": "1.0.0",
+  "description": "Generates flashcards for the ANKI app to support active recall learning and keep your brain sharp as the machines take over.",
+  "main": "index.js",
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/clare-lindley/flashforge.git"
+  },
+  "keywords": [
+    "agents",
+    "llm",
+    "ai",
+    "node",
+    "agent"
+  ],
+  "author": "Clare Lindley",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^17.2.1"
+  }
+}
