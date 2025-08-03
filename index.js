@@ -1,8 +1,3 @@
-// get URL and API key
-// make POST request with auth
-// Choose model and provide a prompt
-// make it take input via cli
-
 // Document steps and rationale
 // fetch over Open AI's client or another lib like axios
 //  a. keep the number of dependencies down
@@ -14,9 +9,10 @@
 // fetch API flashcard
 // async/await rules flashcards SyntaxError: await is only valid in async functions and the top level bodies of modules
 import "dotenv/config.js";
+import readline from "readline";
 const API_URL = "https://api.openai.com/v1/chat/completions";
 
-async function getAResponse() {
+async function getAResponse(prompt) {
   const response = await fetch(API_URL, {
     method: "POST",
     body: JSON.stringify({
@@ -24,7 +20,7 @@ async function getAResponse() {
       messages: [
         {
           role: "user",
-          content: "Write a one-sentence bedtime story about a unicorn.",
+          content: prompt,
         },
       ],
       max_tokens: 100,
@@ -40,4 +36,13 @@ async function getAResponse() {
   console.log(result.choices[0].message.content);
 }
 
-getAResponse();
+const rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout,
+});
+
+rl.question("Prompt, friend, and enter! ", (prompt) => {
+  console.log(`Received: ${prompt}`);
+  getAResponse(prompt);
+  rl.close();
+});
