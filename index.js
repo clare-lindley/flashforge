@@ -1,13 +1,28 @@
-// Document steps and rationale
-// fetch over Open AI's client or another lib like axios
-//  a. keep the number of dependencies down
-//  b. learn the protocol first before abstracting it as makes debugging easier- less of a black box
-//  c. get access to latest and beta features - my instance of chatGPT "said" to me "own the abstraction or the abstraction owns you"- and I like that
-// we are in the business of UNDERSTANDING here not just getting something working so lets roll
-// our sleeves up and dig into the API docs.
+/**
+ * Improvements
+ * - handle race condition - if readline closes before getAResponse() finishes
+ * - handle open API errors - consider what these might be, have a look at the API docs
+ */
 
-// fetch API flashcard
-// async/await rules flashcards SyntaxError: await is only valid in async functions and the top level bodies of modules
+// Expected shape of response.choices as of 08/2025
+// Prompt: "Can I have a cup of coffee?"
+//
+// {
+//   choices: [
+//     {
+//       index: 0,
+//       message: {
+//         role: "assistant",
+//         content: "Of course! While I can’t physically provide one for you, I can guide you on how to make a great cup of coffee. Whether you prefer drip, French press, espresso, or any other method, let me know your preference and I can give you some tips!",
+//         refusal: null,
+//         annotations: []
+//       },
+//       logprobs: null,
+//       finish_reason: "stop"
+//     }
+//   ]
+// }
+
 import "dotenv/config.js";
 import readline from "readline";
 const API_URL = "https://api.openai.com/v1/chat/completions";
@@ -32,7 +47,6 @@ async function getAResponse(prompt) {
   });
 
   const result = await response.json();
-
   console.log(result.choices[0].message.content);
 }
 
